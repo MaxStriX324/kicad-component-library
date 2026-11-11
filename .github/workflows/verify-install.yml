@@ -1,0 +1,49 @@
+name: Verify Windows KiCad library installer
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/setup.ps1'
+      - 'scripts/install.ps1'
+      - 'install.bat'
+      - 'update.bat'
+      - 'setup.bat'
+      - 'check.bat'
+      - '.github/workflows/verify-install.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-smoke-test:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create fake initialized KiCad 10 library tables
+        shell: pwsh
+        run: |
+          $root = Join-Path $env:RUNNER_TEMP 'MaxStriX324-KiCad-test'
+          $config = Join-Path $root 'config'
+          New-Item -ItemType Directory -Path (Join-Path $config '10.0') -Force | Out-Null
+          [IO.File]::WriteAllText((Join-Path $config '10.0\sym-lib-table'), "(sym_lib_table" + [Environment]::NewLine + ")" + [Environment]::NewLine)
+          [IO.File]::WriteAllText((Join-Path $config '10.0\fp-lib-table'), "(fp_lib_table" + [Environment]::NewLine + ")" + [Environment]::NewLine)
+      - name: Install, repeat installation, update and verify
+        shell: pwsh
+        run: |
+          $root = Join-Path $env:RUNNER_TEMP 'MaxStriX324-KiCad-test'
+          $dir = Join-Path $root 'installed'
+          $config = Join-Path $root 'config'
+          foreach ($mode in @('Install', 'Install', 'Update', 'Check')) {
+            & powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1 -Mode $mode -InstallDir $dir -ConfigRoot $config -NoUserEnv
+            if ($LASTEXITCODE -ne 0) { throw "Installer mode $mode failed ($LASTEXITCODE)" }
+          }
+          foreach ($table in @('sym-lib-table', 'fp-lib-table')) {
+            $text = [IO.File]::ReadAllText((Join-Path $config ('10.0\' + $table)))
+            $num = [regex]::Matches($text, '\(name "MaxStriX324"\)').Count
+            if ($num -ne 1) { throw "Expected exactly one library table entry for $table, got $num" }
+            if ($text -notlike '*'+ '$' + '{MAXSTRIX_KICAD_LIB}*') { throw "Missing portable environment variable in $table" }
+          }
+          Write-Host 'All installation and upgrade checks passed.'
