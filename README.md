@@ -1,16 +1,19 @@
 # MaxStriX324 KiCad Component Library
 
-Reusable KiCad symbols, footprints and 3D models. The library is stored on GitHub so it can be restored after reinstalling Windows.
+Public reusable KiCad symbols, footprints and approximate 3D references.
 
-## Library structure
+## Files
 
-- `MaxStriX324.kicad_sym` — custom schematic symbols.
-- `MaxStriX324.pretty/` — custom PCB footprints.
-- `MaxStriX324.3dshapes/` — local 3D models.
-- `install.bat` — register the library in KiCad on Windows.
-- `update.bat` — fetch new components.
+- `MaxStriX324.kicad_sym` — UCC21750 symbol (pins 1–16).
+- `MaxStriX324.pretty/UCC21750_SOIC16W_P1.27mm.kicad_mod` — wide SOIC-16 footprint.
+- `MaxStriX324.pretty/EC3503_16P_THT.kicad_mod` — EC3503 16-pin transformer bobbin footprint.
+- `MaxStriX324.3dshapes/EC3503_16P_THT.wrl` — **approximate** visual model; STEP to be added after separate verification.
+- `install.bat`, `update.bat` — Windows installation and update.
 
-## Install
+## Windows install
+
+1. Install Git for Windows and KiCad (8–10); launch KiCad once.
+2. Run:
 
 ```powershell
 git clone https://github.com/MaxStriX324/kicad-component-library.git
@@ -18,15 +21,16 @@ cd kicad-component-library
 .\install.bat
 ```
 
-Restart KiCad after installation. Registered library nickname: `MaxStriX324`.
+3. Restart KiCad. Library nickname: `MaxStriX324`.
 
-## Initial components
+The installer sets the user environment variable `MAXSTRIX_KICAD_LIB` and adds the library to the newest installed KiCad global symbol and footprint tables, backing each up to `.bak` before a modification.
 
-- EC3503: 16-pin THT transformer bobbin; check the manufacturer's mechanical drawing and **verify pin numbering** before fabrication.
-- UCC21750: TI isolated IGBT gate driver. Match the footprint and the exact ordered package to the TI datasheet.
+The `update.bat` script uses `git pull --ff-only`.
 
-**Engineering warning:** All footprints and 3D shapes require physical verification; a 3D model does not prove creepage or clearance suitability for high voltage.
+## Notes
 
-## Third-party CAD files
+**Verify before PCB fabrication:** EC3503 pad numbering is provisional (1–8 on left, 9–16 on right). The approximate 3D model is NOT an official mechanical CAD model. UCC21750 pads and schematic pin mapping should be cross-checked with the exact TI ordering code and datasheet.
 
-Do not upload third-party CAD models without checking redistribution permissions. Use original vendor sources where redistribution is restricted.
+For imported third-party component files, see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+MIT license covers the newly authored code, footprints, and schematic symbol in this repository, not vendor documentation.
