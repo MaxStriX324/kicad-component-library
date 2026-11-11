@@ -47,3 +47,22 @@ jobs:
             if ($text -notlike '*'+ '$' + '{MAXSTRIX_KICAD_LIB}*') { throw "Missing portable environment variable in $table" }
           }
           Write-Host 'All installation and upgrade checks passed.'
+      - name: Refuse active KiCad in non-interactive mode without killing it
+        shell: pwsh
+        run: |
+          $root = Join-Path $env:RUNNER_TEMP 'MaxStriX324-KiCad-test'
+          $dir = Join-Path $root 'installed'
+          $config = Join-Path $root 'config'
+          $fake = Join-Path $env:RUNNER_TEMP 'kicad.exe'
+          Copy-Item (Join-Path $env:WINDIR 'System32\ping.exe') $fake -Force
+          $process = Start-Process -FilePath $fake -ArgumentList '-t 127.0.0.1' -WindowStyle Hidden -PassThru
+          try {
+            Start-Sleep -Seconds 2
+            if (-not (Get-Process -Id $process.Id -ErrorAction SilentlyContinue)) { throw 'Could not start the KiCad process simulator.' }
+            & powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1 -Mode Update -InstallDir $dir -ConfigRoot $config -NoUserEnv -NonInteractive
+            if ($LASTEXITCODE -eq 0) { throw 'Installer must reject modification while KiCad is open.' }
+          } finally {
+            Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+          }
+          & powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1 -Mode Check -InstallDir $dir -ConfigRoot $config -NoUserEnv
+          if ($LASTEXITCODE -ne 0) { throw 'Installed libraries should remain intact after the refused update.' }
