@@ -1,0 +1,37 @@
+name: Generate KiCad STEP models
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/generate_3d_models.py'
+      - '.github/workflows/generate-3d.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CadQuery
+        run: python -m pip install --upgrade pip cadquery
+      - name: Build and validate STEP models
+        run: python scripts/generate_3d_models.py
+      - name: Commit generated STEP models
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add MaxStriX324.3dshapes/*.step MaxStriX324.pretty/*.kicad_mod
+          if ! git diff --cached --quiet; then
+            git commit -m 'Generate approximate 3D STEP models'
+            git push
+          fi
