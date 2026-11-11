@@ -26,5 +26,5 @@
   (pad "14" thru_hole circle (at 17.5 -7.5) (size 2.5 2.5) (drill 1.3) (layers "*.Cu" "*.Mask"))
   (pad "15" thru_hole circle (at 17.5 -12.5) (size 2.5 2.5) (drill 1.3) (layers "*.Cu" "*.Mask"))
   (pad "16" thru_hole circle (at 17.5 -17.5) (size 2.5 2.5) (drill 1.3) (layers "*.Cu" "*.Mask"))
-  (model "${MAXSTRIX_KICAD_LIB}/MaxStriX324.3dshapes/EC3503_16P_THT.wrl" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))
+  (model "${MAXSTRIX_KICAD_LIB}/MaxStriX324.3dshapes/EC3503_16P_THT.step" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))
 )

@@ -26,4 +26,5 @@
   (pad "14" smd roundrect (at 4.64 -1.905) (size 2.06 0.60) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.15))
   (pad "15" smd roundrect (at 4.64 -3.175) (size 2.06 0.60) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.15))
   (pad "16" smd roundrect (at 4.64 -4.445) (size 2.06 0.60) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.15))
+  (model "${MAXSTRIX_KICAD_LIB}/MaxStriX324.3dshapes/UCC21750_SOIC16W_P1.27mm.step" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))
 )
