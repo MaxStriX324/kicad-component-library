@@ -11,10 +11,39 @@ Public version-controlled KiCad component library: **schematic symbols, PCB foot
 
 The [EC3503 transformer symbol pinout and isolation warning](docs/EC3503_flyback_4CT_16P.md) must be read before using the draft symbol. The EC3503 footprint contains **16 pins with provisional numbering**. It is **not** a ready-made transformer winding schematic.
 
-## Install on Windows (KiCad 8/9/10)
+## One-click installation on Windows (KiCad 8 / 9 / 10)
 
-1. Install [Git for Windows](https://git-scm.com/downloads/win) and KiCad. Open KiCad once to initialize its global library tables.
-2. Clone:
+You do **not** need to manually copy symbols, footprints or 3D models into KiCad, or register the libraries through the UI.
+
+1. Install KiCad, launch it once, and initialize the **default KiCad symbol and footprint library tables**. Then close all KiCad windows.
+2. **Download [setup.bat](https://raw.githubusercontent.com/MaxStriX324/kicad-component-library/main/setup.bat)** (use **Save link as...** in your browser) and run it. It works without administrator rights.
+3. Start KiCad again and find the **MaxStriX324** library in the symbol and footprint browsers.
+
+The installer retrieves the public source from GitHub and stores it in:
+
+```text
+%LOCALAPPDATA%\MaxStriX324\KiCadLibrary
+```
+
+If **Git for Windows** is available it uses a shallow `git clone`. Without Git it downloads and extracts a GitHub ZIP. Updates use `git pull --ff-only` when the installation is a Git checkout; otherwise they use a new ZIP with a backup of the previous version.
+
+The installer registers the shared library **globally** in each initialized KiCad 8/9/10 configuration, preserves default libraries, sets the Windows user environment variable `MAXSTRIX_KICAD_LIB`, and writes backup copies of any library table it changes. The same environment variable resolves 3D STEP paths.
+
+### Updating
+
+Run:
+
+```text
+%LOCALAPPDATA%\MaxStriX324\KiCadLibrary\update.bat
+```
+
+Or run your downloaded `setup.bat update`. Close KiCad before updating.
+
+### Checking
+
+Run `check.bat` in the installed folder or use `setup.bat check`. The check verifies files and global table registration.
+
+### Advanced installation from a clone
 
 ```powershell
 git clone https://github.com/MaxStriX324/kicad-component-library.git
@@ -22,19 +51,9 @@ cd kicad-component-library
 .\install.bat
 ```
 
-3. Completely restart KiCad. Select the `MaxStriX324` library in Symbol Editor or Footprint Editor.
+This installs a **managed copy** to the same fixed location above instead of registering a transient Downloads directory. The `update.bat` script updates this managed copy; if it detects local Git modifications, it refuses to overwrite them. No administrator rights are required.
 
-The installer registers global libraries and sets the persistent Windows user environment variable `MAXSTRIX_KICAD_LIB`, so STEP paths continue to resolve independently of an individual schematic or PCB project.
-
-### Updating the library
-
-Run `update.bat` in the cloned folder, or execute:
-
-```powershell
-git pull --ff-only
-```
-
-To recover the library after reinstalling Windows, clone again and run `install.bat`. KiCad schematic/PCB projects should retain their library nicknames.
+If KiCad has not been initialized yet, the installer will stop with an explanation rather than replace its stock library tables.
 
 ## Repository layout
 
