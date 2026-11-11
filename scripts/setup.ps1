@@ -45,28 +45,28 @@ function Test-Library([string]$Root) {
 }
 
 function Assert-KiCadClosed {
-    # KiCad can write the global library tables while closing. Never kill the
-    # process automatically, since that can destroy unsaved schematic/PCB edits.
+    # Never terminate KiCad automatically: users may have unsaved work.
     while ($true) {
         $running = @(Get-Process -Name kicad,eeschema,pcbnew,cvpcb -ErrorAction SilentlyContinue)
         if ($running.Count -eq 0) { return }
-
         $processNames = (($running | Select-Object -ExpandProperty ProcessName -Unique) -join ', ')
         Write-Host ''
         Write-Host "KiCad is still running: $processNames" -ForegroundColor Yellow
-        Write-Host 'Save your projects and close all KiCad, Schematic Editor and PCB Editor windows.'
-        Write-Host 'The installer will continue in the SAME window without restarting the BAT file.'
-
+        Write-Host 'Save your projects and close KiCad and its editors.'
+        Write-Host 'The same installer will then continue without restarting.'
         if ($NonInteractive) {
             throw 'KiCad is running in non-interactive mode. Close it and retry.'
         }
         try {
-            $choice = Read-Host 'After closing KiCad press Enter to continue, or type Q to cancel'
+            $choice = Read-Host 'After closing KiCad press Enter; type Q to cancel'
         } catch {
             throw 'No interactive console is available. Close KiCad and rerun setup.bat.'
         }
-        if ($choice -match '^[Qq]
-
+        if (($choice -eq 'Q') -or ($choice -eq 'q')) {
+            throw 'Installation canceled by user. No library changes were made.'
+        }
+    }
+}
 function Get-KiCadConfigDirs {
     if (-not (Test-Path -LiteralPath $ConfigRoot -PathType Container)) {
         throw "KiCad configuration not found: $ConfigRoot. Launch KiCad and initialize default libraries once."
