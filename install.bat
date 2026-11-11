@@ -1,7 +1,9 @@
 @echo off
 setlocal
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0scripts\install.ps1"
-set "EXITCODE=%errorlevel%"
+cd /d "%~dp0"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0scripts\setup.ps1" -Mode Install
+set "RESULT=%ERRORLEVEL%"
 echo.
+if not "%RESULT%"=="0" echo Installation failed. See the message above.
 pause
-exit /b %EXITCODE%
+exit /b %RESULT%
