@@ -7,9 +7,9 @@ Public version-controlled KiCad component library: **schematic symbols, PCB foot
 | Part | Symbol | Footprint | 3D |
 |---|---|---|---|
 | Texas Instruments UCC21750, wide SOIC-16 (DW) | `MaxStriX324:UCC21750` | `MaxStriX324:UCC21750_SOIC16W_P1.27mm` | Generated approximate STEP |
-| RUICHI EC3503, 16-pin THT transformer bobbin | Transformer winding symbol is application-specific | `MaxStriX324:EC3503_16P_THT` | Generated approximate STEP + WRL |
+| RUICHI EC3503, 16-pin THT transformer bobbin | `MaxStriX324:EC3503_Flyback_4CT_16P_DRAFT` (application-specific) | `MaxStriX324:EC3503_16P_THT` | Generated approximate STEP + WRL |
 
-The EC3503 footprint contains **16 pins with provisional numbering**. It is **not** a ready-made transformer winding schematic.
+The [EC3503 transformer symbol pinout and isolation warning](docs/EC3503_flyback_4CT_16P.md) must be read before using the draft symbol. The EC3503 footprint contains **16 pins with provisional numbering**. It is **not** a ready-made transformer winding schematic.
 
 ## Install on Windows (KiCad 8/9/10)
 
