@@ -19,6 +19,8 @@ You do **not** need to manually copy symbols, footprints or 3D models into KiCad
 2. **Download [setup.bat](https://raw.githubusercontent.com/MaxStriX324/kicad-component-library/main/setup.bat)** (use **Save link as...** in your browser) and run it. It works without administrator rights.
 3. Start KiCad again and find the **MaxStriX324** library in the symbol and footprint browsers.
 
+If KiCad is running when you start the installer, it will ask you to **save and close KiCad**, then **press Enter in the same installer window**. It does not terminate KiCad automatically or lose unsaved edits. Typing `Q` cancels safely.
+
 The installer retrieves the public source from GitHub and stores it in:
 
 ```text
@@ -37,7 +39,7 @@ Run:
 %LOCALAPPDATA%\MaxStriX324\KiCadLibrary\update.bat
 ```
 
-Or run your downloaded `setup.bat update`. Close KiCad before updating.
+Or run your downloaded `setup.bat update`. If KiCad is open, the script asks you to close it and press Enter to continue.
 
 ### Checking
 
