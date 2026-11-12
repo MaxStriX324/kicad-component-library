@@ -33,11 +33,13 @@ The installer registers the shared library **globally** in each initialized KiCa
 
 ### Updating
 
-Run:
+Use the **external updater**, deliberately stored outside the library folder so ZIP installations can be replaced safely without locking any running batch file:
 
 ```text
-%LOCALAPPDATA%\MaxStriX324\KiCadLibrary\update.bat
+%LOCALAPPDATA%\MaxStriX324\Update-MaxStriX324.bat
 ```
+
+You can also [download the standalone updater](Update-MaxStriX324.bat) and run it from Downloads. It does not need Git. The installed library's `update.bat` simply opens the external updater in a new console window.
 
 Or run your downloaded `setup.bat update`. If KiCad is open, the script asks you to close it and press Enter to continue.
 

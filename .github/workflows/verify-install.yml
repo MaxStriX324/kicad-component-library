@@ -46,6 +46,13 @@ jobs:
             if ($num -ne 1) { throw "Expected exactly one library table entry for $table, got $num" }
             if ($text -notlike '*'+ '$' + '{MAXSTRIX_KICAD_LIB}*') { throw "Missing portable environment variable in $table" }
           }
+          $external = Join-Path $root 'Update-MaxStriX324.bat'
+          if (-not (Test-Path -LiteralPath $external)) { throw 'External updater was not installed.' }
+          $externalText = [IO.File]::ReadAllText($external)
+          if ($externalText -notmatch 'Mode Update') { throw 'External updater does not run the updater mode.' }
+          $updateText = [IO.File]::ReadAllText((Join-Path $dir 'update.bat'))
+          if ($updateText -match 'Git not installed') { throw 'Legacy updater still requires Git.' }
+          if ($updateText -notmatch 'start ') { throw 'Installed updater does not spawn an external launcher.' }
           Write-Host 'All installation and upgrade checks passed.'
       - name: Refuse active KiCad in non-interactive mode without killing it
         shell: pwsh

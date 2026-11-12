@@ -32,6 +32,7 @@ $ConfigRoot = [IO.Path]::GetFullPath($ConfigRoot)
 function Test-Library([string]$Root) {
     $required = @(
         'MaxStriX324.kicad_sym',
+        'Update-MaxStriX324.bat',
         'MaxStriX324.pretty\EC3503_16P_THT.kicad_mod',
         'MaxStriX324.pretty\UCC21750_SOIC16W_P1.27mm.kicad_mod',
         'MaxStriX324.3dshapes\EC3503_16P_THT.step',
@@ -184,6 +185,19 @@ function Download-Source([string]$Staging) {
     }
 }
 
+function Install-ExternalUpdater {
+    $source = Join-Path $InstallDir 'Update-MaxStriX324.bat'
+    if (-not (Test-Path -LiteralPath $source -PathType Leaf)) {
+        throw 'Missing Update-MaxStriX324.bat in downloaded library.'
+    }
+    $parent = Split-Path -Parent $InstallDir
+    New-Item -ItemType Directory -Path $parent -Force | Out-Null
+    $target = Join-Path $parent 'Update-MaxStriX324.bat'
+    if ([IO.Path]::GetFullPath($source) -ine [IO.Path]::GetFullPath($target)) {
+        Copy-Item -LiteralPath $source -Destination $target -Force
+    }
+    Write-Host "External updater: $target"
+}
 function Update-Checkout {
     $git = Get-Command git -ErrorAction SilentlyContinue
     if ($git -and (Test-Path -LiteralPath (Join-Path $InstallDir '.git'))) {
@@ -266,9 +280,11 @@ try {
     }
 
     Write-Host ''
+    Install-ExternalUpdater
+
     Write-Host 'Success. Restart KiCad completely to reload symbols, footprints and 3D models.'
     Write-Host "Library nickname: $LibraryName"
-    Write-Host "To update: $InstallDir\update.bat"
+    Write-Host "To update: $(Join-Path (Split-Path -Parent $InstallDir) 'Update-MaxStriX324.bat')"
     exit 0
 } catch {
     Write-Host ''
