@@ -36,6 +36,51 @@ jobs:
           $root = Join-Path $env:RUNNER_TEMP 'MaxStriX324-KiCad-test'
           $dir = Join-Path $root 'installed'
           $config = Join-Path $root 'config'
+          # Simulate a stale registration inherited from an earlier version.
+          $symTable = Join-Path $config '10.0\sym-lib-table'
+          $fpTable = Join-Path $config '10.0\fp-lib-table'
+          $staleUri = '
+            & powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1 -Mode $mode -InstallDir $dir -ConfigRoot $config -NoUserEnv
+            if ($LASTEXITCODE -ne 0) { throw "Installer mode $mode failed ($LASTEXITCODE)" }
+          }
+          foreach ($table in @('sym-lib-table', 'fp-lib-table')) {
+            $text = [IO.File]::ReadAllText((Join-Path $config ('10.0\' + $table)))
+            $num = [regex]::Matches($text, '\(name "MaxStriX324"\)').Count
+            if ($num -ne 1) { throw "Expected exactly one library table entry for $table, got $num" }
+            $expected = if ($table -eq 'fp-lib-table') { Join-Path $dir 'MaxStriX324.pretty' } else { Join-Path $dir 'MaxStriX324.kicad_sym' }
+            $expected = [IO.Path]::GetFullPath($expected).Replace([char]92, [char]47)
+            if (-not $text.Contains('(uri "' + $expected + '")')) { throw "Incorrect absolute library path in $table" }
+          }
+          $external = Join-Path $root 'Update-MaxStriX324.bat'
+          if (-not (Test-Path -LiteralPath $external)) { throw 'External updater was not installed.' }
+          $externalText = [IO.File]::ReadAllText($external)
+          if ($externalText -notmatch 'Mode Update') { throw 'External updater does not run the updater mode.' }
+          $updateText = [IO.File]::ReadAllText((Join-Path $dir 'update.bat'))
+          if ($updateText -match 'Git not installed') { throw 'Legacy updater still requires Git.' }
+          if ($updateText -notmatch 'start ') { throw 'Installed updater does not spawn an external launcher.' }
+          Write-Host 'All installation and upgrade checks passed.'
+      - name: Refuse active KiCad in non-interactive mode without killing it
+        shell: pwsh
+        run: |
+          $root = Join-Path $env:RUNNER_TEMP 'MaxStriX324-KiCad-test'
+          $dir = Join-Path $root 'installed'
+          $config = Join-Path $root 'config'
+          $fake = Join-Path $env:RUNNER_TEMP 'kicad.exe'
+          Copy-Item (Join-Path $env:WINDIR 'System32\ping.exe') $fake -Force
+          $process = Start-Process -FilePath $fake -ArgumentList '-t 127.0.0.1' -WindowStyle Hidden -PassThru
+          try {
+            Start-Sleep -Seconds 2
+            if (-not (Get-Process -Id $process.Id -ErrorAction SilentlyContinue)) { throw 'Could not start the KiCad process simulator.' }
+            & powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1 -Mode Update -InstallDir $dir -ConfigRoot $config -NoUserEnv -NonInteractive
+            if ($LASTEXITCODE -eq 0) { throw 'Installer must reject modification while KiCad is open.' }
+          } finally {
+            Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+          }
+          & powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1 -Mode Check -InstallDir $dir -ConfigRoot $config -NoUserEnv
+          if ($LASTEXITCODE -ne 0) { throw 'Installed libraries should remain intact after the refused update.' }
+ + '{MAXSTRIX_KICAD_LIB}'
+          [IO.File]::WriteAllText($symTable, '(sym_lib_table (lib (name "MaxStriX324")(type "KiCad")(uri "' + $staleUri + '/MaxStriX324.kicad_sym")(options "")(descr "old")))')
+          [IO.File]::WriteAllText($fpTable, '(fp_lib_table (lib (name "MaxStriX324")(type "KiCad")(uri "' + $staleUri + '/MaxStriX324.pretty")(options "")(descr "old")))')
           foreach ($mode in @('Install', 'Install', 'Update', 'Check')) {
             & powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup.ps1 -Mode $mode -InstallDir $dir -ConfigRoot $config -NoUserEnv
             if ($LASTEXITCODE -ne 0) { throw "Installer mode $mode failed ($LASTEXITCODE)" }
@@ -44,7 +89,9 @@ jobs:
             $text = [IO.File]::ReadAllText((Join-Path $config ('10.0\' + $table)))
             $num = [regex]::Matches($text, '\(name "MaxStriX324"\)').Count
             if ($num -ne 1) { throw "Expected exactly one library table entry for $table, got $num" }
-            if ($text -notlike '*'+ '$' + '{MAXSTRIX_KICAD_LIB}*') { throw "Missing portable environment variable in $table" }
+            $expected = if ($table -eq 'fp-lib-table') { Join-Path $dir 'MaxStriX324.pretty' } else { Join-Path $dir 'MaxStriX324.kicad_sym' }
+            $expected = [IO.Path]::GetFullPath($expected).Replace([char]92, [char]47)
+            if (-not $text.Contains('(uri "' + $expected + '")')) { throw "Incorrect absolute library path in $table" }
           }
           $external = Join-Path $root 'Update-MaxStriX324.bat'
           if (-not (Test-Path -LiteralPath $external)) { throw 'External updater was not installed.' }

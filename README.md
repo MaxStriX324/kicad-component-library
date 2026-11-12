@@ -29,7 +29,7 @@ The installer retrieves the public source from GitHub and stores it in:
 
 If **Git for Windows** is available it uses a shallow `git clone`. Without Git it downloads and extracts a GitHub ZIP. Updates use `git pull --ff-only` when the installation is a Git checkout; otherwise they use a new ZIP with a backup of the previous version.
 
-The installer registers the shared library **globally** in each initialized KiCad 8/9/10 configuration, preserves default libraries, sets the Windows user environment variable `MAXSTRIX_KICAD_LIB`, and writes backup copies of any library table it changes. The same environment variable resolves 3D STEP paths.
+The installer registers the shared library **globally** using **absolute paths** to its symbol library and `.pretty` footprint folder, preserves default libraries, repairs old entries based on environment variables, and backs up the library tables before changing them. It also sets the Windows user environment variable `MAXSTRIX_KICAD_LIB` for **3D STEP paths**. If 3D models are missing immediately after first installation, sign out and sign in again so Windows desktop processes inherit the new user variable, or configure it in KiCad's **Preferences → Configure Paths**.
 
 ### Updating
 

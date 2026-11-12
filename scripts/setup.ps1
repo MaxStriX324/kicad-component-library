@@ -135,7 +135,9 @@ function Register-Library([string]$TablePath, [string]$Kind, [string]$Uri) {
         throw "Unrecognized KiCad library table: $TablePath"
     }
 
-    $targetUri = '$' + '{' + $EnvName + '}' + '/' + $Uri
+    # Absolute library-table URIs avoid KiCad path variables inherited from
+    # an already-running Windows desktop session after first installation.
+    $targetUri = [IO.Path]::GetFullPath((Join-Path $InstallDir $Uri)).Replace([char]92, [char]47)
     $entry = '(lib (name "' + $LibraryName + '")(type "KiCad")(uri "' +
              $targetUri + '")(options "")(descr "MaxStriX324 GitHub library"))'
     $location = Find-LibraryEntry $content
@@ -250,7 +252,14 @@ try {
         foreach ($config in $configs) {
             foreach ($t in @('sym-lib-table','fp-lib-table')) {
                 $tableText = [IO.File]::ReadAllText((Join-Path $config $t))
-                if (-not (Find-LibraryEntry $tableText)) { throw "$t not registered in $config" }
+                $location = Find-LibraryEntry $tableText
+                if (-not $location) { throw "$t not registered in $config" }
+                $entryText = $tableText.Substring($location.Start, $location.Length)
+                $rel = if ($t -eq 'fp-lib-table') { 'MaxStriX324.pretty' } else { 'MaxStriX324.kicad_sym' }
+                $expectedUri = [IO.Path]::GetFullPath((Join-Path $InstallDir $rel)).Replace([char]92, [char]47)
+                if (-not $entryText.Contains('(uri "' + $expectedUri + '")')) {
+                    throw "$t has an incorrect path in $config. Run setup.bat to repair it."
+                }
             }
             Write-Host "OK: $config"
         }
