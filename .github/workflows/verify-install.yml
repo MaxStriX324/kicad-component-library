@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - 'scripts/setup.ps1'
+      - 'scripts/validate_kicad_library.py'
+      - 'MaxStriX324.kicad_sym'
+      - 'MaxStriX324.pretty/**'
       - '.github/workflows/verify-install.yml'
   workflow_dispatch:
 
@@ -17,6 +20,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Validate symbol and footprint syntax
+        shell: pwsh
+        run: python scripts/validate_kicad_library.py
       - name: Prepare KiCad 10 mock tables with stale entries
         shell: pwsh
         run: |
