@@ -19,7 +19,8 @@ $symbols = Join-Path $root 'MaxStriX324.kicad_sym'
 $footprints = Join-Path $root 'MaxStriX324.pretty'
 $out = Join-Path ([IO.Path]::GetTempPath()) ('MaxStriX324-KiCad-check-' + [guid]::NewGuid().ToString('N'))
 try {
-    New-Item -ItemType Directory -Path (Join-Path $out 'symbols'), (Join-Path $out 'footprints') -Force | Out-Null
+    New-Item -ItemType Directory -Path (Join-Path $out 'symbols') -Force | Out-Null
+    New-Item -ItemType Directory -Path (Join-Path $out 'footprints') -Force | Out-Null
     Write-Host "KiCad CLI: $cli"
     & $cli sym export svg --output (Join-Path $out 'symbols') $symbols
     if ($LASTEXITCODE -ne 0) { throw 'Native KiCad symbol parser rejected the library.' }
