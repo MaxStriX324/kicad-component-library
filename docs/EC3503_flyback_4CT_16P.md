@@ -21,17 +21,19 @@ Total pins = 2 + 2 + 4 × 3 = **16**.
 | Pins | Winding | Meanings |
 |---|---|---|
 | 1, 2 | Primary (PRI) | P_START, P_END |
-| 3, 4 | Auxiliary (AUX) | AUX_START, AUX_END |
-| 5, 6, 7 | Upper U | U_START, U_CT, U_END |
-| 8, 9, 10 | Upper V | V_START, V_CT, V_END |
-| 11, 12, 13 | Upper W | W_START, W_CT, W_END |
-| 14, 15, 16 | Lower common | LOW_START, LOW_CT, LOW_END |
+| 3, 4 | Auxiliary (AUX) | AUX_END, AUX_START |
+| 5, 6, 7 | Upper U | U_END, U_CT, U_START |
+| 8, 9, 10 | Upper V | V_END, V_CT, V_START |
+| 11, 12, 13 | Upper W | W_END, W_CT, W_START |
+| 14, 15, 16 | Lower common | LOW_END, LOW_CT, LOW_START |
 
 **This is NOT the manufacturer's pinout or a manufacturing-approved bobbin design.** The pin numbers refer only to the provisional EC3503 footprint. Turns, winding directions, dot polarity, insulation, and start/finish assignments remain to be engineered. The symbol and footprint now mark proposed starts with polarity dots. These dots are **designer conventions, not a verified winding orientation**.
 
 ## Pad markings and orientation
 
-On the footprint, silkscreen pad-side labels explicitly show `START` / `END` (for example, `U.START` and `U.END`), while the centre tap is marked `CT`. Filled dots mark pins **1, 3, 5, 8, 11, 14**. Full terminal names appear on `F.Fab`.
+**Flyback winding polarity revision (2026-11-12).** Primary START=1 and END=2 are unchanged. For AUX, U, V, W and LOW the START/END markings are reversed at their fixed numbered pads, with matching polarity dots moved to pins 4, 7, 10, 13 and 16. Center taps stay at pads 6, 9, 12 and 15. This is a requested winding-dot convention, not a validated winding direction or isolation system.
+
+On the footprint, silkscreen pad-side labels explicitly show `START` / `END` (for example, `U.START` and `U.END`), while the centre tap is marked `CT`. Filled dots now mark pins **1, 4, 7, 10, 13, 16**. Full terminal names appear on `F.Fab`.
 
 The real PCB top view is provisional: pins 1–8 on the left (top-to-bottom), pins 9–16 on the right (bottom-to-top). The exact physical bobbin manufacturer's pin numbering must be checked. No drill sizes, pad centres, or electrical pad numbers were changed by this revision.
 

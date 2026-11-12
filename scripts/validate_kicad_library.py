@@ -89,6 +89,23 @@ def main():
             raise ValueError(f"{name}: expected pads numbered 1..16 exactly once, got {pads}")
         print(f"PASS footprint {name}: 16 numbered pads")
 
+    transformer = symbol_block(content, "EC3503_Flyback_4CT_16P_DRAFT")
+    assigned = dict((int(n), name) for name, n in re.findall(
+        r'\(name\s+"([A-Z_]+)"\s+\(effects[^\n]*\)\s+\(number\s+"(\d+)"', transformer))
+    expected = {1:'P_START', 2:'P_END', 3:'AUX_END', 4:'AUX_START',
+                5:'U_END', 6:'U_CT', 7:'U_START', 8:'V_END', 9:'V_CT',
+                10:'V_START', 11:'W_END', 12:'W_CT', 13:'W_START',
+                14:'LOW_END', 15:'LOW_CT', 16:'LOW_START'}
+    if assigned != expected:
+        raise ValueError(f'Transformer winding START/END map invalid: {assigned}')
+    dots = {(float(x), float(y)) for x,y in re.findall(
+        r'\(circle\s+\(center\s+(-?[\d.]+)\s+(-?[\d.]+)\)', transformer)}
+    expected_dots = {(-12.7,28.9), (-12.7,-28.9), (12.7,21.9),
+                     (12.7,1.58), (12.7,-18.74), (12.7,-39.06)}
+    if dots != expected_dots:
+        raise ValueError(f'Transformer winding polarity dots invalid: {dots}')
+    print('PASS: Flyback START/END and polarity-dot convention')
+
     print("PASS: Static KiCad library format and pin/pad checks")
 
 if __name__ == "__main__":
