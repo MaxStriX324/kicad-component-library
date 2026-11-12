@@ -31,7 +31,7 @@ Total pins = 2 + 2 + 4 × 3 = **16**.
 
 ## Pad markings and orientation
 
-On the footprint, `START`/`END` are abbreviated `S`/`E` in the silkscreen pad-side text (e.g. `U.START`, `U.END`) and the centre tap is `CT`. Filled dots mark pins **1, 3, 5, 8, 11, 14**. Full terminal names appear on `F.Fab`.
+On the footprint, silkscreen pad-side labels explicitly show `START` / `END` (for example, `U.START` and `U.END`), while the centre tap is marked `CT`. Filled dots mark pins **1, 3, 5, 8, 11, 14**. Full terminal names appear on `F.Fab`.
 
 The real PCB top view is provisional: pins 1–8 on the left (top-to-bottom), pins 9–16 on the right (bottom-to-top). The exact physical bobbin manufacturer's pin numbering must be checked. No drill sizes, pad centres, or electrical pad numbers were changed by this revision.
 
