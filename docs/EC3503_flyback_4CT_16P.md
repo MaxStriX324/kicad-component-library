@@ -22,12 +22,20 @@ Total pins = 2 + 2 + 4 × 3 = **16**.
 |---|---|---|
 | 1, 2 | Primary (PRI) | P_START, P_END |
 | 3, 4 | Auxiliary (AUX) | AUX_START, AUX_END |
-| 5, 6, 7 | Upper U | U_A, U_CT, U_B |
-| 8, 9, 10 | Upper V | V_A, V_CT, V_B |
-| 11, 12, 13 | Upper W | W_A, W_CT, W_B |
-| 14, 15, 16 | Lower common | LOW_A, LOW_CT, LOW_B |
+| 5, 6, 7 | Upper U | U_START, U_CT, U_END |
+| 8, 9, 10 | Upper V | V_START, V_CT, V_END |
+| 11, 12, 13 | Upper W | W_START, W_CT, W_END |
+| 14, 15, 16 | Lower common | LOW_START, LOW_CT, LOW_END |
 
-**This is NOT the manufacturer's pinout or a manufacturing-approved bobbin design.** The pin numbers refer only to the provisional EC3503 footprint. Turns, winding directions, dot polarity, insulation, and start/finish assignments remain to be engineered. The symbol intentionally does not include phase dots.
+**This is NOT the manufacturer's pinout or a manufacturing-approved bobbin design.** The pin numbers refer only to the provisional EC3503 footprint. Turns, winding directions, dot polarity, insulation, and start/finish assignments remain to be engineered. The symbol and footprint now mark proposed starts with polarity dots. These dots are **designer conventions, not a verified winding orientation**.
+
+## Pad markings and orientation
+
+On the footprint, `START`/`END` are abbreviated `S`/`E` in the silkscreen pad-side text (e.g. `U.START`, `U.END`) and the centre tap is `CT`. Filled dots mark pins **1, 3, 5, 8, 11, 14**. Full terminal names appear on `F.Fab`.
+
+The real PCB top view is provisional: pins 1–8 on the left (top-to-bottom), pins 9–16 on the right (bottom-to-top). The exact physical bobbin manufacturer's pin numbering must be checked. No drill sizes, pad centres, or electrical pad numbers were changed by this revision.
+
+The silkscreen labels sit just outside the body and the footprint courtyard is expanded horizontally to 56 mm (±28 mm). Confirm the added footprint space in the PCB layout.
 
 ## CRITICAL physical-isolation concern
 
