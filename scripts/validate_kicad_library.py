@@ -89,6 +89,29 @@ def main():
             raise ValueError(f"{name}: expected pads numbered 1..16 exactly once, got {pads}")
         print(f"PASS footprint {name}: 16 numbered pads")
 
+    # TI TL431AIDBZR DBZ: verify against TI TL431 datasheet, section 5.
+    # TL432 swaps pins 1 and 2, so an incorrect mapping is a functional defect.
+    tl431 = symbol_block(content, "TL431AIDBZR")
+    tl431pins = [(int(n), name) for name, n in re.findall(
+        r'\\(name\\s+"([^"]+)"[^\\n]*\\n\\s*\\(number\\s+"(\\d+)"', tl431)]
+    if dict(tl431pins) != {1: "CATHODE", 2: "REF", 3: "ANODE"} or len(tl431pins) != 3:
+        raise ValueError(f"TL431AIDBZR pinout does not match TI DBZ: {tl431pins}")
+    tl431fp = PRETTY / "TL431AIDBZR_SOT23_DBZ.kicad_mod"
+    fpcontent = tl431fp.read_text(encoding="utf-8")
+    balanced_sexpr(fpcontent, tl431fp)
+    padpositions = [(int(n), float(x), float(y)) for n, x, y in re.findall(
+        r'\\(pad\s+"(\\d+)"\s+smd\s+roundrect\s+\\(at\s+([-\\d.]+)\s+([-\\d.]+)\\)', fpcontent)]
+    if padpositions != [(1, -1.05, -0.95), (2, -1.05, 0.95), (3, 1.05, 0.0)]:
+        raise ValueError(f"TL431AIDBZR pad positions inconsistent with TI top view: {padpositions}")
+    if "(size 1.30 0.60)" not in fpcontent:
+        raise ValueError("TL431AIDBZR footprint lacks TI DBZ pad dimensions")
+    if 'MaxStriX324.3dshapes/TL431AIDBZR_SOT23_DBZ.wrl' not in fpcontent:
+        raise ValueError("TL431AIDBZR footprint missing linked 3D model")
+    vrml = ROOT / "MaxStriX324.3dshapes" / "TL431AIDBZR_SOT23_DBZ.wrl"
+    if not vrml.is_file() or not vrml.read_text(encoding="utf-8").startswith("#VRML V2.0 utf8"):
+        raise ValueError("TL431AIDBZR linked VRML model is missing or invalid")
+    print("PASS TL431AIDBZR: TI DBZ 1=K 2=REF 3=A, pads and linked VRML")
+
     transformer = symbol_block(content, "EC3503_Flyback_4CT_16P_DRAFT")
     assigned = dict((int(n), name) for name, n in re.findall(
         r'\(name\s+"([A-Z_]+)"\s+\(effects[^\n]*\)\s+\(number\s+"(\d+)"', transformer))

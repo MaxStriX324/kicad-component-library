@@ -55,5 +55,7 @@ jobs:
           }
           if (-not (Test-Path (Join-Path $dir 'MaxStriX324.pretty\EC3503_16P_THT.kicad_mod'))) { throw 'Missing EC3503 footprint' }
           if (-not (Test-Path (Join-Path $dir 'MaxStriX324.pretty\UCC21750_SOIC16W_P1.27mm.kicad_mod'))) { throw 'Missing UCC21750 footprint' }
+          if (-not (Test-Path (Join-Path $dir 'MaxStriX324.pretty\TL431AIDBZR_SOT23_DBZ.kicad_mod'))) { throw 'Missing TL431AIDBZR footprint' }
+          if (-not (Test-Path (Join-Path $dir 'MaxStriX324.3dshapes\TL431AIDBZR_SOT23_DBZ.wrl'))) { throw 'Missing TL431AIDBZR 3D model' }
           if (-not (Test-Path (Join-Path $root 'Update-MaxStriX324.bat'))) { throw 'Missing external updater' }
           Write-Host 'PASS: library entries now point to valid absolute paths'

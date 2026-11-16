@@ -6,6 +6,7 @@ Public version-controlled KiCad component library: **schematic symbols, PCB foot
 
 | Part | Symbol | Footprint | 3D |
 |---|---|---|---|
+| Texas Instruments TL431AIDBZR, DBZ SOT-23-3 (**1=K, 2=REF, 3=A**) | `MaxStriX324:TL431AIDBZR` | `MaxStriX324:TL431AIDBZR_SOT23_DBZ` | Simplified generated WRL (linked); optional STEP generator |
 | Texas Instruments UCC21750, wide SOIC-16 (DW) | `MaxStriX324:UCC21750` | `MaxStriX324:UCC21750_SOIC16W_P1.27mm` | Generated approximate STEP |
 | RUICHI EC3503, 16-pin THT transformer bobbin | `MaxStriX324:EC3503_Flyback_4CT_16P_DRAFT` (application-specific) | `MaxStriX324:EC3503_16P_THT` | Generated approximate STEP + WRL |
 

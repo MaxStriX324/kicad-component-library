@@ -1,0 +1,55 @@
+#VRML V2.0 utf8
+# TL431AIDBZR Texas Instruments DBZ SOT-23-3 approximate mechanical model
+# Dimensions specified in millimeters; model uses 1/2.54 conversion for KiCad WRL units.
+# IMPORTANT: this is a simplified generated approximation, not an official TI CAD model.
+# View from top: pad 1 upper left (K), 2 lower left (REF), 3 right center (A).
+Transform {
+  scale 0.3937007874 0.3937007874 0.3937007874
+  children [
+  Transform {
+    translation 0 0 0.625
+    children [
+      Shape {
+        appearance Appearance { material Material { diffuseColor 0.12 0.13 0.15 specularColor 0.18 0.18 0.18 shininess 0.2 } }
+        geometry Box { size 1.3 2.9 0.95 }
+      }
+    ]
+  } # molded body
+  Transform {
+    translation -1 -0.95 0.09
+    children [
+      Shape {
+        appearance Appearance { material Material { diffuseColor 0.72 0.74 0.76 specularColor 0.18 0.18 0.18 shininess 0.2 } }
+        geometry Box { size 0.72 0.44 0.18 }
+      }
+    ]
+  } # lead1 CATHODE
+  Transform {
+    translation -1 0.95 0.09
+    children [
+      Shape {
+        appearance Appearance { material Material { diffuseColor 0.72 0.74 0.76 specularColor 0.18 0.18 0.18 shininess 0.2 } }
+        geometry Box { size 0.72 0.44 0.18 }
+      }
+    ]
+  } # lead2 REF
+  Transform {
+    translation 1 0 0.09
+    children [
+      Shape {
+        appearance Appearance { material Material { diffuseColor 0.72 0.74 0.76 specularColor 0.18 0.18 0.18 shininess 0.2 } }
+        geometry Box { size 0.72 0.44 0.18 }
+      }
+    ]
+  } # lead3 ANODE
+    Transform {
+      translation -0.44 -1.13 1.095
+      children [
+        Shape {
+          appearance Appearance { material Material { diffuseColor 0.045 0.045 0.048 } }
+          geometry Cylinder { radius 0.085 height 0.006 }
+        }
+      ]
+    } # pin1 index
+  ]
+}
