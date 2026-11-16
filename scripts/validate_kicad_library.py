@@ -93,14 +93,14 @@ def main():
     # TL432 swaps pins 1 and 2, so an incorrect mapping is a functional defect.
     tl431 = symbol_block(content, "TL431AIDBZR")
     tl431pins = [(int(n), name) for name, n in re.findall(
-        r'\\(name\\s+"([^"]+)"[^\\n]*\\n\\s*\\(number\\s+"(\\d+)"', tl431)]
+        r'\(name\s+"([^"]+)"[^\n]*\n\s*\(number\s+"(\d+)"', tl431)]
     if dict(tl431pins) != {1: "CATHODE", 2: "REF", 3: "ANODE"} or len(tl431pins) != 3:
         raise ValueError(f"TL431AIDBZR pinout does not match TI DBZ: {tl431pins}")
     tl431fp = PRETTY / "TL431AIDBZR_SOT23_DBZ.kicad_mod"
     fpcontent = tl431fp.read_text(encoding="utf-8")
     balanced_sexpr(fpcontent, tl431fp)
     padpositions = [(int(n), float(x), float(y)) for n, x, y in re.findall(
-        r'\\(pad\s+"(\\d+)"\s+smd\s+roundrect\s+\\(at\s+([-\\d.]+)\s+([-\\d.]+)\\)', fpcontent)]
+        r'\(pad\s+"(\d+)"\s+smd\s+roundrect\s+\(at\s+([-\d.]+)\s+([-\d.]+)\)', fpcontent)]
     if padpositions != [(1, -1.05, -0.95), (2, -1.05, 0.95), (3, 1.05, 0.0)]:
         raise ValueError(f"TL431AIDBZR pad positions inconsistent with TI top view: {padpositions}")
     if "(size 1.30 0.60)" not in fpcontent:
