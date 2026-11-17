@@ -226,4 +226,25 @@
         (number "3" (effects (font (size 1.016 1.016)))))
     )
   )
+
+  (symbol "LF1005S_CableExit"
+    (pin_names (offset 1.016))
+    (in_bom yes) (on_board yes)
+    (property "Reference" "J" (id 0) (at 0 8.89 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "LF1005S_CableExit" (id 1) (at 0 -8.89 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "MaxStriX324:LF1005S_Cable_3x0.5_Shield_THT_Relief" (id 2) (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+    (property "Datasheet" "https://www.lem.com/sites/default/files/products_datasheets/lf_1005-s.pdf" (id 3) (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+    (property "Description" "Soldered shielded three-wire cable to remote LEM LF1005-S: M, plus 24V, minus 24V and cable shield termination." (id 4) (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+    (symbol "LF1005S_CableExit_0_1"
+      (rectangle (start -7.62 6.35) (end 7.62 -6.35) (stroke (width 0.254) (type default)) (fill (type background)))
+      (text "TO LF1005-S" (at 0 2.54 0) (effects (font (size 1 1))))
+      (text "3x0.5 + SHIELD" (at 0 0 0) (effects (font (size 0.9 0.9))))
+    )
+    (symbol "LF1005S_CableExit_1_1"
+      (pin passive line (at -12.7 3.81 0) (length 5.08) (name "M" (effects (font (size 1.016 1.016)))) (number "1" (effects (font (size 1.016 1.016)))))
+      (pin passive line (at -12.7 1.27 0) (length 5.08) (name "+24V" (effects (font (size 1.016 1.016)))) (number "2" (effects (font (size 1.016 1.016)))))
+      (pin passive line (at -12.7 -1.27 0) (length 5.08) (name "-24V" (effects (font (size 1.016 1.016)))) (number "3" (effects (font (size 1.016 1.016)))))
+      (pin passive line (at -12.7 -3.81 0) (length 5.08) (name "SHIELD" (effects (font (size 1.016 1.016)))) (number "4" (effects (font (size 1.016 1.016)))))
+    )
+  )
 )
