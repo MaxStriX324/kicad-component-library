@@ -236,9 +236,7 @@
     (property "Datasheet" "https://www.lem.com/sites/default/files/products_datasheets/lf_1005-s.pdf" (id 3) (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
     (property "Description" "Soldered shielded three-wire cable to remote LEM LF1005-S: M, plus 24V, minus 24V and cable shield termination." (id 4) (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
     (symbol "LF1005S_CableExit_0_1"
-      (rectangle (start -7.62 6.35) (end 7.62 -6.35) (stroke (width 0.254) (type default)) (fill (type background)))
-      (text "TO LF1005-S" (at 0 2.54 0) (effects (font (size 1 1))))
-      (text "3x0.5 + SHIELD" (at 0 0 0) (effects (font (size 0.9 0.9))))
+      (rectangle (start -7.62 6.35) (end 5.08 -6.35) (stroke (width 0.254) (type default)) (fill (type background)))
     )
     (symbol "LF1005S_CableExit_1_1"
       (pin passive line (at -12.7 3.81 0) (length 5.08) (name "M" (effects (font (size 1.016 1.016)))) (number "1" (effects (font (size 1.016 1.016)))))
