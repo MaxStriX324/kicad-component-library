@@ -8,8 +8,11 @@ Public version-controlled KiCad component library: **schematic symbols, PCB foot
 |---|---|---|---|
 | Texas Instruments TL431AIDBZR, DBZ SOT-23-3 (**1=K, 2=REF, 3=A**) | `MaxStriX324:TL431AIDBZR` | `MaxStriX324:TL431AIDBZR_SOT23_DBZ` | Simplified generated WRL (linked); optional STEP generator |
 | Texas Instruments UCC21750, wide SOIC-16 (DW) | `MaxStriX324:UCC21750` | `MaxStriX324:UCC21750_SOIC16W_P1.27mm` | Generated approximate STEP |
+| Nexperia BAV199,215 (1=A1, 2=K2, 3=K1/A2) | `MaxStriX324:BAV199_215` | `MaxStriX324:BAV199_215_SOT23` | Linked 3D WRL; STEP generator |
 | LEM LF1005-S cable exit, shielded 3×0.5 mm², direct PCB soldering | `MaxStriX324:LF1005S_CableExit` | `MaxStriX324:LF1005S_Cable_3x0.5_Shield_THT_Relief` | No 3D (cable) |
 | RUICHI EC3503, 16-pin THT transformer bobbin | `MaxStriX324:EC3503_Flyback_4CT_16P_DRAFT` (application-specific) | `MaxStriX324:EC3503_16P_THT` | Generated approximate STEP + WRL |
+
+See [BAV199,215 SOT23 documentation](docs/BAV199_215_SOT23.md) for pinout, pads and protection notes.
 
 See [LF1005-S cable exit documentation](docs/LF1005S_cable_exit.md) for wiring, footprint dimensions and EMC notes.
 

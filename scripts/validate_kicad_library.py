@@ -145,6 +145,24 @@ def main():
         raise ValueError("LF1005-S cable strain relief needs two NPTH holes")
     print("PASS LF1005-S cable symbol/footprint: 4 pads + 2 NPTH")
 
+    bav = symbol_block(content, "BAV199_215")
+    bav_pins = [(int(n), label) for label, n in re.findall(
+        r'\(name\s+"([^"]+)"[^\n]*\n\s*\(number\s+"(\d+)"', bav)]
+    if bav_pins != [(1, "A1"), (2, "K2"), (3, "K1/A2")]:
+        raise ValueError(f"BAV199 pinout inconsistent with Nexperia datasheet: {bav_pins}")
+    bav_fp = PRETTY / "BAV199_215_SOT23.kicad_mod"
+    bav_text = bav_fp.read_text(encoding="utf-8")
+    balanced_sexpr(bav_text, bav_fp)
+    bav_pads = [(int(n), float(x), float(y)) for n,x,y in re.findall(
+        r'\(pad\s+"(\d+)"\s+smd\s+roundrect\s+\(at\s+([-\d.]+)\s+([-\d.]+)\)', bav_text)]
+    if bav_pads != [(1,-0.95,1.05),(2,0.95,1.05),(3,0.0,-1.05)]:
+        raise ValueError(f"BAV199 pads inconsistent with Nexperia orientation: {bav_pads}")
+    if "BAV199_215_SOT23.wrl" not in bav_text:
+        raise ValueError("Missing 3D model link on BAV199 footprint")
+    model = ROOT / "MaxStriX324.3dshapes" / "BAV199_215_SOT23.wrl"
+    if not model.is_file() or not model.read_text(encoding="utf-8").startswith("#VRML V2.0 utf8"):
+        raise ValueError("BAV199 3D WRL missing or invalid")
+    print("PASS BAV199: 3 series diode pins, footprint pads, linked WRL")
     print("PASS: Static KiCad library format and pin/pad checks")
 
 if __name__ == "__main__":
