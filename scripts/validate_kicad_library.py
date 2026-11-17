@@ -130,7 +130,7 @@ def main():
     print('PASS: Flyback START/END and polarity-dot convention')
 
     lf = symbol_block(content, "LF1005S_CableExit")
-    lf_pins = [int(n) for n in re.findall(r'\\(number\\s+"(\\d+)"', lf)]
+    lf_pins = [int(n) for n in re.findall(r'\(number\s+"(\d+)"', lf)]
     if sorted(lf_pins) != [1, 2, 3, 4]:
         raise ValueError(f"LF1005-S cable symbol pins incorrect: {lf_pins}")
     if 'MaxStriX324:LF1005S_Cable_3x0.5_Shield_THT_Relief' not in lf:
@@ -138,10 +138,10 @@ def main():
     lf_fp = PRETTY / "LF1005S_Cable_3x0.5_Shield_THT_Relief.kicad_mod"
     lf_fptxt = lf_fp.read_text(encoding="utf-8")
     balanced_sexpr(lf_fptxt, lf_fp)
-    lf_pads = re.findall(r'\\(pad\\s+"(\\d+)"\\s+thru_hole', lf_fptxt)
+    lf_pads = re.findall(r'\(pad\s+"(\d+)"\s+thru_hole', lf_fptxt)
     if sorted(int(n) for n in lf_pads) != [1, 2, 3, 4]:
         raise ValueError(f"LF1005-S cable footprint pads incorrect: {lf_pads}")
-    if len(re.findall(r'\\(pad\\s+""\\s+np_thru_hole', lf_fptxt)) != 2:
+    if len(re.findall(r'\(pad\s+""\s+np_thru_hole', lf_fptxt)) != 2:
         raise ValueError("LF1005-S cable strain relief needs two NPTH holes")
     print("PASS LF1005-S cable symbol/footprint: 4 pads + 2 NPTH")
 
