@@ -38,7 +38,7 @@ def amc1301():
     for x in (-5.45, 5.45):
         for y in (-1.905, -0.635, 0.635, 1.905):
             pins.append(cq.Workplane("XY").box(1.8, 0.5, 0.25, centered=(True, True, False)).translate((x, y, 0)).val())
-    cq.exporters.export(cq.Compound.makeCompound([body, *pins]), str(OUT / "AMC1301_DWV_SOIC8.step", "PESD5V0S1BA_115_SOD323.step"))
+    cq.exporters.export(cq.Compound.makeCompound([body, *pins]), str(OUT / "AMC1301_DWV_SOIC8.step"))
 
 def pesd5v0s1ba():
     """Original approximate Nexperia SOD323 package, 1.7 x 1.25 x 0.95 mm."""
@@ -66,7 +66,7 @@ ec3503()
 ucc21750()
 amc1301()
 pesd5v0s1ba()
-for name in ("EC3503_16P_THT.step", "UCC21750_SOIC16W_P1.27mm.step", "AMC1301_DWV_SOIC8.step"):
+for name in ("EC3503_16P_THT.step", "UCC21750_SOIC16W_P1.27mm.step", "AMC1301_DWV_SOIC8.step", "PESD5V0S1BA_115_SOD323.step"):
     path = OUT / name
     solids = cq.importers.importStep(str(path)).solids().vals()
     expected = 3 if name == "PESD5V0S1BA_115_SOD323.step" else (9 if name == "AMC1301_DWV_SOIC8.step" else 17)
