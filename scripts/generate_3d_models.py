@@ -38,7 +38,16 @@ def amc1301():
     for x in (-5.45, 5.45):
         for y in (-1.905, -0.635, 0.635, 1.905):
             pins.append(cq.Workplane("XY").box(1.8, 0.5, 0.25, centered=(True, True, False)).translate((x, y, 0)).val())
-    cq.exporters.export(cq.Compound.makeCompound([body, *pins]), str(OUT / "AMC1301_DWV_SOIC8.step"))
+    cq.exporters.export(cq.Compound.makeCompound([body, *pins]), str(OUT / "AMC1301_DWV_SOIC8.step", "PESD5V0S1BA_115_SOD323.step"))
+
+def pesd5v0s1ba():
+    """Original approximate Nexperia SOD323 package, 1.7 x 1.25 x 0.95 mm."""
+    body = cq.Workplane("XY").box(1.7, 1.25, 0.95, centered=(True, True, False)).translate((0, 0, 0.15)).val()
+    leads = [
+        cq.Workplane("XY").box(0.8, 0.32, 0.16, centered=(True, True, False)).translate((x, 0, 0)).val()
+        for x in (-1.1, 1.1)
+    ]
+    cq.exporters.export(cq.Compound.makeCompound([body, *leads]), str(OUT / "PESD5V0S1BA_115_SOD323.step"))
 
 def update_footprint_models():
     pretty = ROOT / "MaxStriX324.pretty"
@@ -56,10 +65,11 @@ def update_footprint_models():
 ec3503()
 ucc21750()
 amc1301()
+pesd5v0s1ba()
 for name in ("EC3503_16P_THT.step", "UCC21750_SOIC16W_P1.27mm.step", "AMC1301_DWV_SOIC8.step"):
     path = OUT / name
     solids = cq.importers.importStep(str(path)).solids().vals()
-    expected = 9 if name == "AMC1301_DWV_SOIC8.step" else 17
+    expected = 3 if name == "PESD5V0S1BA_115_SOD323.step" else (9 if name == "AMC1301_DWV_SOIC8.step" else 17)
     assert len(solids) == expected, (name, len(solids), expected)
     print(f"Validated {path.name}: {len(solids)} solids, {path.stat().st_size} bytes")
 update_footprint_models()

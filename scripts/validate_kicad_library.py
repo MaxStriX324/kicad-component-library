@@ -199,6 +199,27 @@ def main():
         raise ValueError("Remote NTC documentation symbol must not appear on PCB")
     print("PASS AMC1301 DWV reinforced package, 8 pin map/pads, WRL and NTC JST PH links")
 
+    pesd = symbol_block(content, "PESD5V0S1BA_115")
+    pesd_pins = [(int(n), label) for label, n in re.findall(
+        r'\(name\s+"([^"]+)"[^\n]*\n\s*\(number\s+"(\d+)"', pesd)]
+    if pesd_pins != [(1, "K1"), (2, "K2")]:
+        raise ValueError(f"PESD5V0S1BA,115 pinout wrong: {pesd_pins}")
+    if "MaxStriX324:PESD5V0S1BA_115_SOD323" not in pesd:
+        raise ValueError("PESD5V0S1BA symbol/footprint binding lost")
+    pesd_fp = PRETTY / "PESD5V0S1BA_115_SOD323.kicad_mod"
+    pesd_txt = pesd_fp.read_text(encoding="utf-8")
+    balanced_sexpr(pesd_txt, pesd_fp)
+    pesd_pads = [(int(n),float(x),float(y)) for n,x,y in re.findall(
+        r'\(pad\s+"(\d+)"\s+smd\s+roundrect\s+\(at\s+([-\d.]+)\s+([-\d.]+)\)', pesd_txt)]
+    if pesd_pads != [(1,-1.1,0.0),(2,1.1,0.0)] or pesd_txt.count("(size 0.6 0.6)") != 2:
+        raise ValueError(f"PESD5V0S1BA reflow pads do not match datasheet: {pesd_pads}")
+    if "PESD5V0S1BA_115_SOD323.wrl" not in pesd_txt:
+        raise ValueError("PESD5V0S1BA missing linked WRL model")
+    pesd_wrl = ROOT / "MaxStriX324.3dshapes" / "PESD5V0S1BA_115_SOD323.wrl"
+    if not pesd_wrl.is_file() or not pesd_wrl.read_text(encoding="utf-8").startswith("#VRML V2.0 utf8"):
+        raise ValueError("PESD5V0S1BA linked VRML model missing")
+    print("PASS PESD5V0S1BA,115: Nexperia pinout, SOD323 reflow pads, linked 3D")
+
     print("PASS: Static KiCad library format and pin/pad checks")
 
 if __name__ == "__main__":
