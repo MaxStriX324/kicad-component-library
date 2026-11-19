@@ -19,7 +19,7 @@
     (effects (font (size 0.43 0.43) (thickness 0.07))))
   (pad "1" smd roundrect (at -1.1 0) (size 0.6 0.6) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.15))
   (pad "2" smd roundrect (at 1.1 0) (size 0.6 0.6) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.15))
-  (model "${MAXSTRIX_KICAD_LIB}/MaxStriX324.3dshapes/PESD5V0S1BA_115_SOD323.wrl"
+  (model "${MAXSTRIX_KICAD_LIB}/MaxStriX324.3dshapes/PESD5V0S1BA_115_SOD323.step"
     (offset (xyz 0 0 0))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 0)))

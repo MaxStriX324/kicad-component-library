@@ -213,11 +213,11 @@ def main():
         r'\(pad\s+"(\d+)"\s+smd\s+roundrect\s+\(at\s+([-\d.]+)\s+([-\d.]+)\)', pesd_txt)]
     if pesd_pads != [(1,-1.1,0.0),(2,1.1,0.0)] or pesd_txt.count("(size 0.6 0.6)") != 2:
         raise ValueError(f"PESD5V0S1BA reflow pads do not match datasheet: {pesd_pads}")
-    if "PESD5V0S1BA_115_SOD323.wrl" not in pesd_txt:
+    if "PESD5V0S1BA_115_SOD323.step" not in pesd_txt:
         raise ValueError("PESD5V0S1BA missing linked WRL model")
-    pesd_wrl = ROOT / "MaxStriX324.3dshapes" / "PESD5V0S1BA_115_SOD323.wrl"
-    if not pesd_wrl.is_file() or not pesd_wrl.read_text(encoding="utf-8").startswith("#VRML V2.0 utf8"):
-        raise ValueError("PESD5V0S1BA linked VRML model missing")
+    pesd_step = ROOT / "MaxStriX324.3dshapes" / "PESD5V0S1BA_115_SOD323.step"
+    if not pesd_step.is_file() or pesd_step.stat().st_size < 1000:
+        raise ValueError("PESD5V0S1BA linked STEP model missing")
     print("PASS PESD5V0S1BA,115: Nexperia pinout, SOD323 reflow pads, linked 3D")
 
     print("PASS: Static KiCad library format and pin/pad checks")

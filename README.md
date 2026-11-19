@@ -11,7 +11,7 @@ Public version-controlled KiCad component library: **schematic symbols, PCB foot
 | TI AMC1301DWV isolated amplifier, wide DWV SOIC8 | `MaxStriX324:AMC1301DWV` | `MaxStriX324:AMC1301_DWV_SOIC8` | Linked generated STEP; WRL fallback |
 | JST PH remote NTC 10k input (probe off-board) | `MaxStriX324:NTC_10K_JST_PH_2` | `Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical` | KiCad stock JST 3D |
 | Remote NTC 10k (documentation-only) | `MaxStriX324:NTC_10K_Remote` | none (off-board) | none |
-| Nexperia PESD5V0S1BA,115 bidirectional TVS SOD323 | `MaxStriX324:PESD5V0S1BA_115` | `MaxStriX324:PESD5V0S1BA_115_SOD323` | Linked simplified 3D WRL; STEP generated |
+| Nexperia PESD5V0S1BA,115 bidirectional TVS SOD323 | `MaxStriX324:PESD5V0S1BA_115` | `MaxStriX324:PESD5V0S1BA_115_SOD323` | Linked generated STEP; WRL fallback |
 | Nexperia BAV199,215 (1=A1, 2=K2, 3=K1/A2) | `MaxStriX324:BAV199_215` | `MaxStriX324:BAV199_215_SOT23` | Linked 3D WRL; STEP generator |
 | LEM LF1005-S cable exit, shielded 3×0.5 mm², direct PCB soldering | `MaxStriX324:LF1005S_CableExit` | `MaxStriX324:LF1005S_Cable_3x0.5_Shield_THT_Relief` | No 3D (cable) |
 | RUICHI EC3503, 16-pin THT transformer bobbin | `MaxStriX324:EC3503_Flyback_4CT_16P_DRAFT` (application-specific) | `MaxStriX324:EC3503_16P_THT` | Generated approximate STEP + WRL |
