@@ -1,0 +1,23 @@
+#VRML V2.0 utf8
+# TI AMC1301DWV approximate original DWV wide SOIC8 3D envelope (NOT manufacturer CAD)
+# Dimensions in mm, scale for KiCad VRML viewer; body 7.5 x 5.85 x 2.3mm,
+# 8 leads spaced 1.27mm and left-right centers 10.9mm.
+Transform { scale 0.3937007874 0.3937007874 0.3937007874 children [
+    Transform { translation 0 0 1.35 children [ Shape { appearance Appearance { material Material { diffuseColor 0.12 0.12 0.14 } } geometry Box { size 7.5 5.85 2.3 } } ] }
+    Transform { translation -5.45 -1.905 0.125 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 1.8 0.5 0.25 } } ] }
+    Transform { translation -4.2 -1.905 0.8 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 0.95 0.5 0.25 } } ] }
+    Transform { translation 5.45 -1.905 0.125 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 1.8 0.5 0.25 } } ] }
+    Transform { translation 4.2 -1.905 0.8 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 0.95 0.5 0.25 } } ] }
+    Transform { translation -5.45 -0.635 0.125 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 1.8 0.5 0.25 } } ] }
+    Transform { translation -4.2 -0.635 0.8 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 0.95 0.5 0.25 } } ] }
+    Transform { translation 5.45 -0.635 0.125 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 1.8 0.5 0.25 } } ] }
+    Transform { translation 4.2 -0.635 0.8 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 0.95 0.5 0.25 } } ] }
+    Transform { translation -5.45 0.635 0.125 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 1.8 0.5 0.25 } } ] }
+    Transform { translation -4.2 0.635 0.8 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 0.95 0.5 0.25 } } ] }
+    Transform { translation 5.45 0.635 0.125 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 1.8 0.5 0.25 } } ] }
+    Transform { translation 4.2 0.635 0.8 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 0.95 0.5 0.25 } } ] }
+    Transform { translation -5.45 1.905 0.125 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 1.8 0.5 0.25 } } ] }
+    Transform { translation -4.2 1.905 0.8 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 0.95 0.5 0.25 } } ] }
+    Transform { translation 5.45 1.905 0.125 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 1.8 0.5 0.25 } } ] }
+    Transform { translation 4.2 1.905 0.8 children [ Shape { appearance Appearance { material Material { diffuseColor 0.75 0.77 0.8 } } geometry Box { size 0.95 0.5 0.25 } } ] }
+] }

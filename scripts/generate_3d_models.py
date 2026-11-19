@@ -31,6 +31,15 @@ def ucc21750():
             pins.append(cq.Workplane("XY").box(2.06, 0.60, 0.25, centered=(True, True, False)).translate((x, y, 0)).val())
     cq.exporters.export(cq.Compound.makeCompound([body.val()] + pins), str(OUT / "UCC21750_SOIC16W_P1.27mm.step"))
 
+def amc1301():
+    """Approximate wide-body TI DWV SOIC-8: 7.5x5.85 body; lead rows 10.9mm apart."""
+    body = cq.Workplane("XY").box(7.5, 5.85, 2.3, centered=(True, True, False)).translate((0, 0, 0.2)).val()
+    pins = []
+    for x in (-5.45, 5.45):
+        for y in (-1.905, -0.635, 0.635, 1.905):
+            pins.append(cq.Workplane("XY").box(1.8, 0.5, 0.25, centered=(True, True, False)).translate((x, y, 0)).val())
+    cq.exporters.export(cq.Compound.makeCompound([body, *pins]), str(OUT / "AMC1301_DWV_SOIC8.step"))
+
 def update_footprint_models():
     pretty = ROOT / "MaxStriX324.pretty"
     ec = pretty / "EC3503_16P_THT.kicad_mod"
@@ -46,9 +55,11 @@ def update_footprint_models():
 
 ec3503()
 ucc21750()
-for name in ("EC3503_16P_THT.step", "UCC21750_SOIC16W_P1.27mm.step"):
+amc1301()
+for name in ("EC3503_16P_THT.step", "UCC21750_SOIC16W_P1.27mm.step", "AMC1301_DWV_SOIC8.step"):
     path = OUT / name
     solids = cq.importers.importStep(str(path)).solids().vals()
-    assert len(solids) == 17, (name, len(solids))
+    expected = 9 if name == "AMC1301_DWV_SOIC8.step" else 17
+    assert len(solids) == expected, (name, len(solids), expected)
     print(f"Validated {path.name}: {len(solids)} solids, {path.stat().st_size} bytes")
 update_footprint_models()
