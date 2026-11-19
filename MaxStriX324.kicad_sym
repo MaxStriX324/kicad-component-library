@@ -287,7 +287,6 @@
     (property "Description" "On-PCB JST PH 2.00 mm 2-pin B2B-PH-K-S(LF)(SN) header for a remote 10k NTC thermistor; housing PHR-2, crimp contacts as specified. Both thermistor models are off PCB." (id 4) (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
     (symbol "NTC_10K_JST_PH_2_0_1"
       (rectangle (start -7.62 5.08) (end 7.62 -5.08) (stroke (width 0.254) (type default)) (fill (type background)))
-      (text "NTC / JST PH" (at 0 0 0) (effects (font (size 0.9 0.9))))
     )
     (symbol "NTC_10K_JST_PH_2_1_1"
       (pin passive line (at -12.7 2.54 0) (length 5.08)

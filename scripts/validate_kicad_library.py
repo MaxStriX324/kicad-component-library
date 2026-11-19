@@ -183,11 +183,11 @@ def main():
                        7: (5.45,-0.635), 8: (5.45,-1.905)}
     if len(matches) != 8 or any((x,y) != expected_coords.get(n) for n,x,y in matches):
         raise ValueError(f"AMC1301 DWV footprint pad geometry inconsistent: {matches}")
-    if "(size 1.8 0.6)" not in amc_txt or "AMC1301_DWV_SOIC8.wrl" not in amc_txt:
+    if "(size 1.8 0.6)" not in amc_txt or "AMC1301_DWV_SOIC8.step" not in amc_txt:
         raise ValueError("AMC1301 missing TI pad sizes or linked WRL 3D")
-    model = ROOT / "MaxStriX324.3dshapes" / "AMC1301_DWV_SOIC8.wrl"
-    if not model.is_file() or not model.read_text(encoding="utf-8").startswith("#VRML V2.0 utf8"):
-        raise ValueError("AMC1301 linked WRL missing or invalid")
+    model = ROOT / "MaxStriX324.3dshapes" / "AMC1301_DWV_SOIC8.step"
+    if not model.is_file() or model.stat().st_size < 1000:
+        raise ValueError("AMC1301 linked STEP missing or invalid")
     for name in ("NTC_10K_JST_PH_2", "NTC_10K_Remote"):
         ntc = symbol_block(content, name)
         ntc_pins = [int(p) for p in re.findall(r'\(number\s+"(\d+)"', ntc)]

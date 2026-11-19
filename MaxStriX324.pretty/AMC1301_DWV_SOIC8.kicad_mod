@@ -22,6 +22,6 @@
   (pad "6" smd roundrect (at 5.45 0.635) (size 1.8 0.6) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.10))
   (pad "4" smd roundrect (at -5.45 1.905) (size 1.8 0.6) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.10))
   (pad "5" smd roundrect (at 5.45 1.905) (size 1.8 0.6) (layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.10))
-  (model "${MAXSTRIX_KICAD_LIB}/MaxStriX324.3dshapes/AMC1301_DWV_SOIC8.wrl"
+  (model "${MAXSTRIX_KICAD_LIB}/MaxStriX324.3dshapes/AMC1301_DWV_SOIC8.step"
     (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))
 )

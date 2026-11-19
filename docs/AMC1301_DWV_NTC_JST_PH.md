@@ -4,7 +4,7 @@
 
 - **Symbol:** `MaxStriX324:AMC1301DWV`
 - **Footprint:** `MaxStriX324:AMC1301_DWV_SOIC8`
-- **3D model:** linked `MaxStriX324.3dshapes/AMC1301_DWV_SOIC8.wrl` (original *approximate* model); a STEP may be generated in GitHub Actions by `scripts/generate_3d_models.py`.
+- **3D model:** linked `MaxStriX324.3dshapes/AMC1301_DWV_SOIC8.step` (approximate original CAD, generated and committed by GitHub Actions); WRL fallback also retained. Generator: `scripts/generate_3d_models.py`.
 - Exact package per TI is `DWV0008A`, not `SOIC-8_3.9x4.9mm_P1.27mm`. Body 7.5 × 5.85 mm; lead-to-lead 11.5 mm typical; height 2.8 mm max.
 - TI official DWV land pattern: 8 pads 1.8 × 0.6 mm, 1.27 mm vertical pitch, 10.9 mm horizontal pad center spacing. Nominal metal-pad edge gap **9.1 mm** between high and low isolation domains. Footprint pad1=(-5.45,-1.905), pad8=(+5.45,-1.905), bottom-left pad4=(-5.45,+1.905), bottom-right pad5=(+5.45,+1.905).
 

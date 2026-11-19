@@ -8,7 +8,7 @@ Public version-controlled KiCad component library: **schematic symbols, PCB foot
 |---|---|---|---|
 | Texas Instruments TL431AIDBZR, DBZ SOT-23-3 (**1=K, 2=REF, 3=A**) | `MaxStriX324:TL431AIDBZR` | `MaxStriX324:TL431AIDBZR_SOT23_DBZ` | Simplified generated WRL (linked); optional STEP generator |
 | Texas Instruments UCC21750, wide SOIC-16 (DW) | `MaxStriX324:UCC21750` | `MaxStriX324:UCC21750_SOIC16W_P1.27mm` | Generated approximate STEP |
-| TI AMC1301DWV isolated amplifier, wide DWV SOIC8 | `MaxStriX324:AMC1301DWV` | `MaxStriX324:AMC1301_DWV_SOIC8` | Linked WRL; STEP generator |
+| TI AMC1301DWV isolated amplifier, wide DWV SOIC8 | `MaxStriX324:AMC1301DWV` | `MaxStriX324:AMC1301_DWV_SOIC8` | Linked generated STEP; WRL fallback |
 | JST PH remote NTC 10k input (probe off-board) | `MaxStriX324:NTC_10K_JST_PH_2` | `Connector_JST:JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical` | KiCad stock JST 3D |
 | Remote NTC 10k (documentation-only) | `MaxStriX324:NTC_10K_Remote` | none (off-board) | none |
 | Nexperia BAV199,215 (1=A1, 2=K2, 3=K1/A2) | `MaxStriX324:BAV199_215` | `MaxStriX324:BAV199_215_SOT23` | Linked 3D WRL; STEP generator |
