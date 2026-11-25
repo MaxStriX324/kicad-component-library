@@ -406,7 +406,7 @@
     (property "Value" "AVTOSTAR_ESP12F_Debug_Module_SMD" (id 1) (at 0 10.16 0) (effects (font (size 1 1))))
     (property "Footprint" "MaxStriX324:AVTOSTAR_ESP12F_Debug_Module_SMD" (id 2) (at 0 0 0) (effects (font (size 1 1)) hide))
     (property "Datasheet" "https://github.com/MaxStriX324/avtostar-smart-home/tree/main/hardware/esp12f-debug-module" (id 3) (at 0 0 0) (effects (font (size 1 1)) hide))
-    (property "Description" "AVTOSTAR ESP-12F Debug Module, 50x40 mm, RS-485, 12 contacts" (id 4) (at 0 0 0) (effects (font (size 1 1)) hide))
+    (property "Description" "AVTOSTAR ESP-12F Debug Module, 50x35 mm, RS-485, 12 contacts" (id 4) (at 0 0 0) (effects (font (size 1 1)) hide))
     (symbol "AVTOSTAR_ESP12F_Debug_Module_SMD_0_1" (rectangle (start -12.7 7.62) (end 12.7 -10.16) (stroke (width 0.254) (type default)) (fill (type background))))
     (symbol "AVTOSTAR_ESP12F_Debug_Module_SMD_1_1"
       (pin power_in line (at -15.24 5.08 0) (length 2.54) (name "+5V" (effects (font (size 1.016 1.016)))) (number "1" (effects (font (size 1.016 1.016)))))
@@ -428,7 +428,7 @@
     (property "Value" "AVTOSTAR_ESP12F_Debug_Module_THT" (id 1) (at 0 10.16 0) (effects (font (size 1 1))))
     (property "Footprint" "MaxStriX324:AVTOSTAR_ESP12F_Debug_Module_THT" (id 2) (at 0 0 0) (effects (font (size 1 1)) hide))
     (property "Datasheet" "https://github.com/MaxStriX324/avtostar-smart-home/tree/main/hardware/esp12f-debug-module" (id 3) (at 0 0 0) (effects (font (size 1 1)) hide))
-    (property "Description" "AVTOSTAR ESP-12F Debug Module, 50x40 mm, RS-485, 12 contacts" (id 4) (at 0 0 0) (effects (font (size 1 1)) hide))
+    (property "Description" "AVTOSTAR ESP-12F Debug Module, 50x35 mm, RS-485, 12 contacts" (id 4) (at 0 0 0) (effects (font (size 1 1)) hide))
     (symbol "AVTOSTAR_ESP12F_Debug_Module_THT_0_1" (rectangle (start -12.7 7.62) (end 12.7 -10.16) (stroke (width 0.254) (type default)) (fill (type background))))
     (symbol "AVTOSTAR_ESP12F_Debug_Module_THT_1_1"
       (pin power_in line (at -15.24 5.08 0) (length 2.54) (name "+5V" (effects (font (size 1.016 1.016)))) (number "1" (effects (font (size 1.016 1.016)))))
