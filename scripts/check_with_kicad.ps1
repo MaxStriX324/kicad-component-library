@@ -26,6 +26,17 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Native KiCad symbol parser rejected the library.' }
     & $cli fp export svg --layers F.SilkS,F.Fab --output (Join-Path $out 'footprints') $footprints
     if ($LASTEXITCODE -ne 0) { throw 'Native KiCad footprint parser rejected the library.' }
+    # Export each AVTOSTAR footprint separately: a generic library export may skip a bad file.
+    foreach ($name in @('AVTOSTAR_ESP12F_Debug_Module_SMD', 'AVTOSTAR_ESP12F_Debug_Module_THT',
+                        'AVTOSTAR_ESP12F_Module_Castellated_PTH_0.8mm', 'AVTOSTAR_ESP12F_Module_EdgeSMD_PTH_0.8mm')) {
+        $target = Join-Path $out $name
+        New-Item -ItemType Directory -Path $target -Force | Out-Null
+        & $cli fp export svg --footprint $name --layers F.Cu,F.Fab --output $target $footprints
+        if ($LASTEXITCODE -ne 0 -or -not (Get-ChildItem -LiteralPath $target -Filter '*.svg' -File)) {
+            throw "Native KiCad footprint export failed: $name"
+        }
+        Write-Host "PASS: $name"
+    }
     Write-Host 'PASS: KiCad loaded symbols and footprints successfully.'
 } finally {
     if (Test-Path -LiteralPath $out) { Remove-Item -LiteralPath $out -Recurse -Force -ErrorAction SilentlyContinue }

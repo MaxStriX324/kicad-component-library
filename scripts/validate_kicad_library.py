@@ -220,6 +220,41 @@ def main():
         raise ValueError("PESD5V0S1BA linked STEP model missing")
     print("PASS PESD5V0S1BA,115: Nexperia pinout, SOD323 reflow pads, linked 3D")
 
+    # AVTOSTAR: check every new footprint, symbol/footprint binding and RF rule area.
+    av_layers = ["F.Cu"] + [f"In{i}.Cu" for i in range(1, 31)] + ["B.Cu"]
+    for kind in ("SMD", "THT"):
+        name = "AVTOSTAR_ESP12F_Debug_Module_" + kind
+        path = PRETTY / (name + ".kicad_mod")
+        fp = path.read_text(encoding="utf-8")
+        balanced_sexpr(fp, path)
+        pins = [int(n) for n in re.findall(r'\(number\s+"(\d+)"', symbol_block(content, name))]
+        pads = [int(n) for n in re.findall(r'\(pad\s+"(\d+)"', fp)]
+        if sorted(pins) != list(range(1, 13)) or sorted(pads) != list(range(1, 13)):
+            raise ValueError(f"{name}: invalid pin/pad numbering")
+        if f'MaxStriX324:{name}' not in symbol_block(content, name):
+            raise ValueError(f"{name}: missing footprint binding")
+        zone = fp.split("(zone ", 1)[1].split('\n  (pad ', 1)[0]
+        expected_layers = "(layers " + " ".join(f'"{layer}"' for layer in av_layers) + ")"
+        if expected_layers not in zone or "(net " in zone or "(net_name " in zone:
+            raise ValueError(f"{name}: RF rule area requires explicit copper layers and no net")
+        for rule in ("tracks", "vias", "pads", "copperpour", "footprints"):
+            if f"({rule} not_allowed)" not in zone:
+                raise ValueError(f"{name}: missing antenna restriction {rule}")
+        if name + ".wrl" not in fp or not (ROOT / "MaxStriX324.3dshapes" / (name + ".wrl")).is_file():
+            raise ValueError(f"{name}: missing model")
+        print(f"PASS {name}: 12 pins/pads, local 32-layer antenna rule area and model")
+    for suffix, expected_count in (("Castellated_PTH_0.8mm", 4), ("EdgeSMD_PTH_0.8mm", 3)):
+        name = "AVTOSTAR_ESP12F_Module_" + suffix
+        path = PRETTY / (name + ".kicad_mod")
+        fp = path.read_text(encoding="utf-8")
+        balanced_sexpr(fp, path)
+        pads = [int(n) for n in re.findall(r'\(pad\s+"(\d+)"', fp)]
+        if sorted(pads) != sorted(list(range(1, 13)) * expected_count):
+            raise ValueError(f"{name}: incorrect repeated pad numbering")
+        if fp.count("(drill 0.8)") != 12:
+            raise ValueError(f"{name}: expected 12 internal holes")
+        print(f"PASS {name}: 12 contacts with SMD/PTH pads")
+
     print("PASS: Static KiCad library format and pin/pad checks")
 
 if __name__ == "__main__":
