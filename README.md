@@ -6,6 +6,8 @@ Public version-controlled KiCad component library: **schematic symbols, PCB foot
 
 | Part | Symbol | Footprint | 3D |
 |---|---|---|---|
+| AVTOSTAR ESP-12F debug module, SMD | `MaxStriX324:AVTOSTAR_ESP12F_Debug_Module_SMD` | `MaxStriX324:AVTOSTAR_ESP12F_Debug_Module_SMD` | Assembly WRL |
+| AVTOSTAR ESP-12F debug module, THT | `MaxStriX324:AVTOSTAR_ESP12F_Debug_Module_THT` | `MaxStriX324:AVTOSTAR_ESP12F_Debug_Module_THT` | Assembly WRL |
 | Texas Instruments TL431AIDBZR, DBZ SOT-23-3 (**1=K, 2=REF, 3=A**) | `MaxStriX324:TL431AIDBZR` | `MaxStriX324:TL431AIDBZR_SOT23_DBZ` | Simplified generated WRL (linked); optional STEP generator |
 | Texas Instruments UCC21750, wide SOIC-16 (DW) | `MaxStriX324:UCC21750` | `MaxStriX324:UCC21750_SOIC16W_P1.27mm` | Generated approximate STEP |
 | TI AMC1301DWV isolated amplifier, wide DWV SOIC8 | `MaxStriX324:AMC1301DWV` | `MaxStriX324:AMC1301_DWV_SOIC8` | Linked generated STEP; WRL fallback |
@@ -25,6 +27,8 @@ See [BAV199,215 SOT23 documentation](docs/BAV199_215_SOT23.md) for pinout, pads 
 See [LF1005-S cable exit documentation](docs/LF1005S_cable_exit.md) for wiring, footprint dimensions and EMC notes.
 
 The transformer footprint now labels winding starts, center taps and ends, with start dots on both the footprint and symbol. The primary START/END is unchanged; the auxiliary and all four secondary windings have reversed START/END markings and matching polarity dots for the flyback convention. These are **provisional** assignments and not a safe, manufacturer-approved pinout. The [EC3503 transformer symbol pinout and isolation warning](docs/EC3503_flyback_4CT_16P.md) must be read before using the draft symbol. The EC3503 footprint contains **16 pins with provisional numbering**. It is **not** a ready-made transformer winding schematic.
+
+[AVTOSTAR ESP-12F: распиновка и посадочные места](docs/AVTOSTAR_ESP12F_Debug_Module.md).
 
 ## One-click installation on Windows (KiCad 8 / 9 / 10)
 
